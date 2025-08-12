@@ -7,9 +7,10 @@ import PageNotFound from "./PageNotFound";
 import Login from "./pages/Login";
 import AppLayout from "./pages/AppLayout";
 import { useReducer } from "react";
+import Cities from "./components/Cities";
 
 const initialState = {
-  status: "loading",
+  status: "ready",
   cities: [],
   countries: [],
   isSidebarOpen: false,
@@ -22,9 +23,24 @@ function reducer(state, action) {
     case "isSidebarOpen":
       return { ...state, isSidebarOpen: action.payload };
     case "searchQuery":
-      return { ...state, query: action.payload };
+      console.log(
+        `query:${action.payload.query}, and activeTab: ${action.payload.activeTab}`
+      );
+      return {
+        ...state,
+        query: action.payload.query,
+        activeTab: action.payload.activeTab,
+        status: action.payload.status,
+      };
     case "SET_TAB":
       return { ...state, activeTab: action.payload };
+    case "setCities":
+      console.log(action.payload.cities);
+      return {
+        ...state,
+        cities: action.payload.cities,
+        status: action.payload.status,
+      };
   }
 }
 
@@ -54,10 +70,17 @@ function App() {
             query={query}
             onNav={handleNav}
             activeTab={activeTab}
+            status={status}
+            cities={cities}
           />
         }
       >
-        <Route path="cities" element={<p>List of Cities</p>} />
+        <Route
+          path="cities"
+          element={
+            <Cities index status={status} cities={cities} dispatch={dispatch} />
+          }
+        />
         <Route path="countries" element={<p>List of Countries</p>} />
         <Route path="form" element={<p className="text-white">Form Data</p>} />
       </Route>

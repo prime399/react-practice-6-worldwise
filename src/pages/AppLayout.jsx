@@ -7,6 +7,8 @@ export default function AppLayout({
   query,
   onNav,
   activeTab,
+  status,
+  cities,
 }) {
   return (
     <div className="relative h-screen">
@@ -20,6 +22,8 @@ export default function AppLayout({
         query={query}
         onNav={onNav}
         activeTab={activeTab}
+        status={status}
+        cities={cities}
       />
 
       {/* Toggle button */}

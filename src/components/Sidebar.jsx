@@ -32,7 +32,7 @@ export default function Sidebar({ isOpen, dispatch, query, onNav, activeTab }) {
         <SearchBar query={query} dispatch={dispatch} activeTab={activeTab} />
         <Outlet />
 
-        <footer className="absolute inset-x-0 bottom-4 h-10 text-center font-semibold">
+        <footer className="absolute inset-x-0 bottom-4 h-10 text-center font-semibold text-white">
           <p>&copy; Copyright {new Date().getFullYear()} by WorldWise Inc.</p>
         </footer>
       </div>
