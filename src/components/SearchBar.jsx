@@ -20,10 +20,15 @@ export default function SearchBar({ query, dispatch, activeTab }) {
         const response = await fetch(url, option);
         const data = await response.json();
 
-        if (data) {
+        if (data && activeTab === "cities") {
           dispatch({
             type: "setCities",
             payload: { cities: data, status: "ready" },
+          });
+        } else if (data && activeTab === "countries") {
+          dispatch({
+            type: "setCountries",
+            payload: { countries: data, status: "ready" },
           });
         } else {
           console.log("API FAILED TO FETCH");
@@ -43,7 +48,7 @@ export default function SearchBar({ query, dispatch, activeTab }) {
     return function () {
       Controller.abort();
     };
-  }, [query, dispatch, url]);
+  }, [query, dispatch, url, activeTab]);
 
   return (
     activeTab && (

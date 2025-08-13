@@ -55,7 +55,7 @@ export default function Homepage() {
             of. Never forget your wonderful experiences, and show your friends
             how you have wandered the world.
           </h2>
-          <Link to={"/pricing"}>
+          <Link to={"/app"}>
             <button
               className="bg-red-700 hover:bg-red-800 text-white font-semibold
             px-6 py-3 text-base
@@ -65,7 +65,7 @@ export default function Homepage() {
             rounded-lg shadow-lg transition duration-200
           "
             >
-              See Pricing
+              See App
             </button>
           </Link>
         </section>

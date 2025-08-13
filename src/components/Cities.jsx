@@ -1,17 +1,21 @@
 import React from "react";
 import CityTab from "./CityTab";
 import Loader from "./Loader";
+import { Outlet } from "react-router-dom";
 
-export default function Cities({ status, cities, dispatch }) {
+export default function Cities({ status, cities }) {
   return (
     // {status == "loading" && <Loader />}
     <>
       {status === "loading" && <Loader />}
-      {cities && (
-        <div>
+      {cities && status !== "loading" && (
+        <div className="text-white font-medium">
+          <div className="ml-10 mb-4">List of Cities:-</div>
           {cities.map((cityDetail, i) => (
             <CityTab city={cityDetail} key={i} />
           ))}
+          {/* Detail for /app/cities/:id will render here */}
+          <Outlet />
         </div>
       )}
     </>

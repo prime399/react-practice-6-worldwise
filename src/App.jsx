@@ -1,4 +1,11 @@
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import "./App.css";
 import Product from "./pages/Product";
 import Pricing from "./pages/Pricing";
@@ -8,12 +15,16 @@ import Login from "./pages/Login";
 import AppLayout from "./pages/AppLayout";
 import { useReducer } from "react";
 import Cities from "./components/Cities";
+import Countries from "./components/Countries";
+import CityTab from "./components/CityTab";
+import City from "./components/City";
+import Form from "./components/Form";
 
 const initialState = {
   status: "ready",
   cities: [],
   countries: [],
-  isSidebarOpen: false,
+  isSidebarOpen: true,
   query: "",
   activeTab: "",
 };
@@ -32,13 +43,20 @@ function reducer(state, action) {
         activeTab: action.payload.activeTab,
         status: action.payload.status,
       };
-    case "SET_TAB":
+    case "setTab":
       return { ...state, activeTab: action.payload };
     case "setCities":
       console.log(action.payload.cities);
       return {
         ...state,
         cities: action.payload.cities,
+        status: action.payload.status,
+      };
+    case "setCountries":
+      console.log(action.payload.countries);
+      return {
+        ...state,
+        countries: action.payload.countries,
         status: action.payload.status,
       };
   }
@@ -49,7 +67,7 @@ function App() {
   const navigate = useNavigate();
 
   function handleNav(tab) {
-    dispatch({ type: "SET_TAB", payload: tab });
+    dispatch({ type: "setTab", payload: tab });
     navigate(`/app/${tab}`);
   }
 
@@ -75,17 +93,48 @@ function App() {
           />
         }
       >
+        <Route index element={<Navigate replace to={"cities"} />} />
         <Route
           path="cities"
           element={
-            <Cities index status={status} cities={cities} dispatch={dispatch} />
+            <Cities status={status} cities={cities} dispatch={dispatch} />
+          }
+        >
+          {/* Detail now renders inside Cities via its <Outlet /> */}
+          {/* <Route path=":id" element={<CityRoute cities={cities} />} /> */}
+        </Route>
+
+        {/* This route will render it's element inside AppLayout's outlet in this case which we want */}
+        <Route path="cities/:id" element={<CityRoute cities={cities} />} />
+
+        {/* Removed sibling detail route: it is now nested under cities */}
+        {/* <Route path="cities/:id" element={<CityTab />} /> */}
+
+        <Route
+          path="countries"
+          element={
+            <Countries
+              index
+              status={status}
+              countries={countries}
+              dispatch={dispatch}
+            />
           }
         />
-        <Route path="countries" element={<p>List of Countries</p>} />
-        <Route path="form" element={<p className="text-white">Form Data</p>} />
+        <Route path="form" element={<Form />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+  );
+}
+
+function CityRoute({ cities }) {
+  const { id } = useParams();
+  const city = cities?.find((c) => String(c.name) === String(id));
+  return city ? (
+    <City city={city} />
+  ) : (
+    <p className="text-white">City not found</p>
   );
 }
 
