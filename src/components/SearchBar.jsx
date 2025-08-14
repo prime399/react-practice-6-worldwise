@@ -5,6 +5,7 @@ export default function SearchBar({ query, dispatch, activeTab }) {
   const url = `${import.meta.env.VITE_BASE_URL}/${search_param}?name=${query}`;
 
   useEffect(() => {
+    // useEffect don't run when a query is empty
     if (!query || query.trim() === "") return;
 
     const Controller = new AbortController();

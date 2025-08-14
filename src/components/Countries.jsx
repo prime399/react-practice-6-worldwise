@@ -1,9 +1,11 @@
 import Loader from "./Loader";
 import CountryTab from "./CountryTab";
+import { useAppState } from "../hooks";
 
-export default function Countries({ status, countries, dispatch }) {
+export default function Countries() {
+  const { status, countries } = useAppState();
+
   return (
-    // {status == "loading" && <Loader />}
     <>
       {status === "loading" && <Loader />}
       {countries && status !== "loading" && (

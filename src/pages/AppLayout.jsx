@@ -1,15 +1,11 @@
 import Sidebar from "../components/Sidebar";
 import Map from "../components/Map";
+import { useAppState, useAppDispatch } from "../hooks";
 
-export default function AppLayout({
-  dispatch,
-  isSidebarOpen,
-  query,
-  onNav,
-  activeTab,
-  status,
-  cities,
-}) {
+export default function AppLayout({ onNav }) {
+  const { isSidebarOpen, query, activeTab, status, cities } = useAppState();
+  const dispatch = useAppDispatch();
+
   return (
     <div className="relative h-screen">
       {/* Map covers full screen */}

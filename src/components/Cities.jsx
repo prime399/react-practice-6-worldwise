@@ -2,10 +2,12 @@ import React from "react";
 import CityTab from "./CityTab";
 import Loader from "./Loader";
 import { Outlet } from "react-router-dom";
+import { useAppState } from "../hooks";
 
-export default function Cities({ status, cities }) {
+export default function Cities() {
+  const { status, cities } = useAppState();
+
   return (
-    // {status == "loading" && <Loader />}
     <>
       {status === "loading" && <Loader />}
       {cities && status !== "loading" && (
