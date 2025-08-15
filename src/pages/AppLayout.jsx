@@ -2,8 +2,8 @@ import Sidebar from "../components/Sidebar";
 import Map from "../components/Map";
 import { useAppState, useAppDispatch } from "../hooks";
 
-export default function AppLayout({ onNav }) {
-  const { isSidebarOpen, query, activeTab, status, cities } = useAppState();
+export default function AppLayout() {
+  const { isSidebarOpen, onNav } = useAppState();
   const dispatch = useAppDispatch();
 
   return (
@@ -12,15 +12,7 @@ export default function AppLayout({ onNav }) {
       <Map />
 
       {/* Sidebar overlay */}
-      <Sidebar
-        isOpen={isSidebarOpen}
-        dispatch={dispatch}
-        query={query}
-        onNav={onNav}
-        activeTab={activeTab}
-        status={status}
-        cities={cities}
-      />
+      <Sidebar onNav={onNav} />
 
       {/* Toggle button */}
       <button

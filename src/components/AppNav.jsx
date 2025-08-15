@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { useAppState } from "../hooks";
 
-export default function AppNav({ onNav, activeTab }) {
+export default function AppNav({ onNav }) {
+  const { activeTab } = useAppState();
+
   return (
     <>
       <button

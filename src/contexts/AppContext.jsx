@@ -1,15 +1,7 @@
 import { createContext, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AppContext = createContext();
-
-const initialState = {
-  status: "ready",
-  cities: [],
-  countries: [],
-  isSidebarOpen: true,
-  query: "",
-  activeTab: "",
-};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -47,7 +39,22 @@ function reducer(state, action) {
 }
 
 function AppContextProvider({ children }) {
+  const initialState = {
+    status: "ready",
+    cities: [],
+    countries: [],
+    isSidebarOpen: true,
+    query: "",
+    activeTab: "",
+    onNav: handleNav,
+  };
   const [state, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
+
+  function handleNav(tab) {
+    dispatch({ type: "setTab", payload: tab });
+    navigate(`/app/${tab}`);
+  }
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

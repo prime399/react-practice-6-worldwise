@@ -1,6 +1,13 @@
 import { useEffect } from "react";
+import { useAppState, useAppDispatch } from "../hooks";
 
-export default function SearchBar({ query, dispatch, activeTab }) {
+export default function SearchBar() {
+  // Extracting query and activeTab from the app state
+  // to determine the search parameter and URL for fetching data
+  // based on the active tab (cities or countries).
+  // The search parameter is either "city" or "country" based on the active tab
+  const { query, activeTab } = useAppState();
+  const dispatch = useAppDispatch();
   const search_param = activeTab === "cities" ? "city" : "country";
   const url = `${import.meta.env.VITE_BASE_URL}/${search_param}?name=${query}`;
 

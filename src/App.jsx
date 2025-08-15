@@ -3,7 +3,6 @@ import {
   Navigate,
   Route,
   Routes,
-  useNavigate,
   useParams,
 } from "react-router-dom";
 import "./App.css";
@@ -22,24 +21,16 @@ import City from "./components/City";
 import Form from "./components/Form";
 
 //Custom Hooks
-import { useAppState, useAppDispatch } from "./hooks";
+import { useAppState } from "./hooks";
 
 function App() {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  function handleNav(tab) {
-    dispatch({ type: "setTab", payload: tab });
-    navigate(`/app/${tab}`);
-  }
-
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="product" element={<Product />} />
       <Route path="pricing" element={<Pricing />} />
       <Route path="login" element={<Login />} />
-      <Route path="app" element={<AppLayout onNav={handleNav} />}>
+      <Route path="app" element={<AppLayout />}>
         <Route index element={<Navigate replace to={"cities"} />} />
         <Route path="cities" element={<Cities />}>
           {/* Detail now renders inside Cities via its <Outlet /> */}
