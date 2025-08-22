@@ -37,7 +37,7 @@ function App() {
           {/* <Route path=":id" element={<CityRoute cities={cities} />} /> */}
         </Route>
 
-        {/* This route will render it's element inside AppLayout's outlet in this case which we want */}
+        {/* This route will render it's element inside AppLayout's outlet (because Applayout is parent container of CityRoute route) in this case which we want */}
         <Route path="cities/:id" element={<CityRoute />} />
 
         {/* Removed sibling detail route: it is now nested under cities */}
@@ -52,7 +52,7 @@ function App() {
 }
 
 function CityRoute() {
-  const { id } = useParams();
+  const { id } = useParams(); //Also the name of city coming from URL parameter
   const { cities } = useAppState();
   const city = cities?.find((c) => String(c.name) === String(id));
   return city ? (

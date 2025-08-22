@@ -5,6 +5,7 @@ export default function CityTab({ city }) {
     <li className="list-none">
       <Link
         className=" flex justify-between items-center w-4/5 mx-auto rounded-xl px-4 py-2 bg-green-800"
+        //here "TO" is acting as a dispatcher, the value it redirecting is similar to how we handle dispatch funciton. with the help of <Link> from react router dom.
         to={`${city.name}?lat=${city.latitude}&lng=${city.longitude}`}
       >
         <h3 className="text-white font-semibold text-lg">{city.name}</h3>

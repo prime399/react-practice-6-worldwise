@@ -31,12 +31,12 @@ export default function SearchBar() {
         if (data && activeTab === "cities") {
           dispatch({
             type: "setCities",
-            payload: { cities: data, status: "ready" },
+            payload: { cities: data, status: "ready", lng: data[0].longitude, lat: data[0].latitude },
           });
         } else if (data && activeTab === "countries") {
           dispatch({
             type: "setCountries",
-            payload: { countries: data, status: "ready" },
+            payload: { countries: data, status: "ready", lng: data[0].longitude, lat: data[0].latitude },
           });
         } else {
           console.log("API FAILED TO FETCH");
@@ -45,9 +45,11 @@ export default function SearchBar() {
         if (error.name === "AbortError") {
           // Ignore AbortError, do not log
           return;
+        } else if(error.name === "TypeError"){
+          dispatch({ type: "setErrorMessage", payload: { error: "Query Not Found", status: "Failed" } });
         }
         console.error(error);
-        dispatch({ type: "setErrorMessage", payload: { error: error.name } });
+        
       }
     }
 
