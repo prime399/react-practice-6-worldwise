@@ -6,14 +6,26 @@ import {
   useParams,
 } from "react-router-dom";
 import "./App.css";
+import { lazy, Suspense } from "react";
 
-//Local Imports
-import Product from "./pages/Product";
-import Pricing from "./pages/Pricing";
-import Homepage from "./pages/Homepage";
-import PageNotFound from "./PageNotFound";
-import Login from "./pages/Login";
-import AppLayout from "./pages/AppLayout";
+//Page Imports
+const Product = lazy(() => import( "./pages/Product"));
+const Pricing = lazy(() => import( "./pages/Pricing"));
+const Homepage = lazy(() => import( "./pages/Homepage"));
+const PageNotFound = lazy(() => import( "./PageNotFound"));
+const Login = lazy(() => import( "./pages/Login"));
+const AppLayout = lazy(() => import( "./pages/AppLayout"));
+
+//Size Comparision:
+// vite v7.0.6 building for production...
+// ✓ 112 modules transformed.
+// dist/index.html                            0.46 kB │ gzip:   0.29 kB
+// dist/assets/worldwise logo-KiuQgcoo.png  141.16 kB
+// dist/assets/index-BORU-9BK.css            44.31 kB │ gzip:  12.23 kB
+// dist/assets/index-DoF2uzl8.js            397.19 kB │ gzip: 122.06 kB
+// ✓ built in 3.73s
+
+//Components Imports
 import Cities from "./components/Cities";
 import Countries from "./components/Countries";
 import CityTab from "./components/CityTab";
@@ -22,9 +34,11 @@ import Form from "./components/Form";
 
 //Custom Hooks
 import { useAppState } from "./hooks";
+import Loader from "./components/Loader";
 
 function App() {
   return (
+    <Suspense fallback={<Loader/>}>
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="product" element={<Product />} />
@@ -44,10 +58,11 @@ function App() {
         {/* <Route path="cities/:id" element={<CityTab />} /> */}
 
         <Route path="countries" element={<Countries index />} />
-        <Route path="form" element={<Form />} />
+        <Route path="form" el ement={<Form />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+    </Suspense>
   );
 }
 
